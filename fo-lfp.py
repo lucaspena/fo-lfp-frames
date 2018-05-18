@@ -1,4 +1,5 @@
 from z3 import *
+import json
 
 # Check if pre /\ code /\ ~post is satisfiable. Return model or None if unsat
 def main(pre, code, post):
@@ -32,7 +33,14 @@ def collect_terms(formulas):
     return None
 
 # Parse input file
+# TODO: need to be able to initialize variable number of definitions
 def parse_file(input_file):
-    return None
+    in_file = json.load(open(input_file))
+    a = eval(in_file["defs"][0])
+    b = eval(in_file["defs"][1])
+    pre = eval(in_file["pre"])
+    code = eval(in_file["code"])
+    post = eval(in_file["post"])
+    return main(pre, code, post)
 
-print test()
+print parse_file("test.json")
