@@ -15,8 +15,10 @@ def main(pre, code, post):
 def test():
     f = Function('f', IntSort(), IntSort())
     a = Int('a')
-    b = Int('b')
-    pre = a + b > 5
+    b = "Int('b')"
+    b = eval(b)
+    pre = "a + b > 5"
+    pre = eval(pre)
     code = b < 1
     post = a == 6
     return main(pre, code, post)
