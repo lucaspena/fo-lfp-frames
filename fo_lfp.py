@@ -2,10 +2,12 @@ from z3 import *
 import json
 
 # Check if pre /\ code /\ ~post is satisfiable. Return model or None if unsat
-def check_sat(pre, code, post):
+def check_sat(formulas, post):
     neg_post = Not(post)
     s = Solver()
-    s.add(pre, code, neg_post)
+    for formula in formulas:
+        s.add(formula)
+    s.add(neg_post)
     is_sat = s.check()
     print is_sat
     if (is_sat == sat):
@@ -32,4 +34,4 @@ def parse_file(input_file):
     post = eval(in_file["post"])
     return check_sat(pre, code, post)
 
-print parse_file("test.json")
+# print parse_file("test.json")
