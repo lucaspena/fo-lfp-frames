@@ -1,5 +1,5 @@
 from z3 import *
-from fo_lfp import check_sat
+from fo_lfp import instantiate
 
 # Test
 def test():
@@ -18,9 +18,12 @@ def test():
     code = a == -1
     post = listf(a)
 
-    # Without this instantiation, check_sat returns satisfiable
-    inst = substitute(rho_list, (x, a))
+    # Uncomment out this and we see satisfiable
+    # return instantiate(pre, code, post, [], [rho_list])
 
-    return check_sat([pre, code, inst], post)
+    # Instantiate x with a in all recursive definitions
+    return instantiate(pre, code, post, [(x, a)], [rho_list])
+
+    ## return check_sat([pre, code, inst], post)
 
 print test()
