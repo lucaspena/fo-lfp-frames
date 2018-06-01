@@ -21,6 +21,7 @@
 #    if type(in_list[0]) == list:
 #        return [replace(in_list[0], var, term)] + replace(in_list[1:], var, term)
 
+# same function as replace, just defined recursively
 def replace_rec(in_list, var, term):
     if type(in_list) !=list:
         return in_list
@@ -40,8 +41,10 @@ def instantiate_one(terms, variables, rec_def):
 
     partial_rec_defs = []
     for term in terms:
+        #instantiate first variable with all possible terms, creating several partially instantiated terms
         partial_rec_defs += [replace_rec(rec_def, variables[0], term)]
     
+    #recursively instantiate the other variables in all partial instantiations
     return instantiate(terms, variables[1:], partial_rec_defs) 
 
 # Instantiate all rec_defs with all terms found so far
@@ -61,7 +64,8 @@ def instantiate(terms, variables, rec_defs):
 #        out += [instantiate_many([term], variables, rec_defs)]
 #    return out
 
-
+#Collect foreground terms from each formula/term/subformula given. 
+#Input is one level of [], such as ["iff", ...]
 def collect_terms(things):
     constants = ["True", "False"]
     bool_constructors = ["not", "and", "or", "iff", "==", "!="]
@@ -83,7 +87,10 @@ def collect_terms(things):
     
     return remove_duplicates(out)
 
-
+#Collect foreground terms on each given formula.
+#Input is level 2 list, i.e [[]], such as [formula_1, formula_2, ...] where formula_i is a level 1 list []
+#NOTE: It is not clear this function will be useful, since we are always dealing 
+#   with one formula (the VC) at any stage
 def collect_terms_formulas(formulas):
     out = []
     for formula in formulas:
