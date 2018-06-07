@@ -96,7 +96,7 @@ def collect_terms_formulas(formulas):
     for formula in formulas:
         out += collect_terms(formula)
     
-    return out
+    return remove_duplicates(out)
 
 # Collect ground terms from formula
 #def collect_terms_formula(formula):

@@ -53,7 +53,8 @@ inst = ['and', '\n',
     ['!=', ['next', ['a']], ['nil']],
     ['list', ['next', ['next', ['a']]]]]]],
  '\n']
-    
+   
+ 
 #function to convert internal encoding to smt2 format 
 def smt_print(formula):
     out = ""
@@ -68,6 +69,10 @@ def smt_print(formula):
     elif formula[0] == "!=":
         left = "not (= "
         right = ")"
+        i = 1
+    elif formula[0] == "\empty":
+        left = "empLoc"
+        right = ""
         i = 1
     
     for terms in formula[i:]:
