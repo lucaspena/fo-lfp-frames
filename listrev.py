@@ -1,4 +1,3 @@
-from test import *
 from fo_lfp import *
 
 Rlist = ["iff", ["list", ["x"]],
