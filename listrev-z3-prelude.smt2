@@ -11,6 +11,8 @@
 (declare-fun keys (Loc) (Set Int))
 (declare-fun keys2 (Loc) (Set Int))
 
+(declare-fun next (Loc) (Loc))
+
 (declare-const nil Loc)
 (assert (= nil -1))
 
@@ -21,3 +23,5 @@
 (declare-const tmp Loc)
 (declare-const orig2 Loc)
 (declare-const rev2 Loc)
+
+(declare-const a Loc)
