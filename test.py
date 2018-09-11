@@ -8,54 +8,7 @@ from fo_lfp import collect_terms_formulas
 def func():
     print("Hello")
 
-
-# Test
-def test():
-   listf = ["iff", ["list", ["x"]],
-                   ["or", ["==", ["x"], ["nil"]],
-                          ["and", ["!=", ["x"], ["nil"]],
-                                  ["list", ["next", ["x"]]]]]]
-
-   pre = ["True"]
-   code = ["==", ["a"], ["nil"]]
-   post = ["list", ["next", ["a"]]]
-
-   terms = collect_terms_formulas([pre, code, post])
-#    listf = [["x"], ["y"], ["z"]]
-#    terms = [['a'], ['nil']]
-   return remove_duplicates(instantiate(terms, ["x", "y", "z"], [listf]))
-
-
-out = test()
-for elts in out:
-    print(elts)
-    print("\n")
-
-#Result of test() formatted to look better under smt_print() defined below
-inst = ['and', '\n',
- ['iff',
-  ['list', ['a']],
-  ['or',
-   ['==', ['a'], ['nil']],
-   ['and', ['!=', ['a'], ['nil']], ['list', ['next', ['a']]]]]],
- '\n',
- ['iff',
-  ['list', ['nil']],
-  ['or',
-   ['==', ['nil'], ['nil']],
-   ['and', ['!=', ['nil'], ['nil']], ['list', ['next', ['nil']]]]]],
- '\n',
- ['iff',
-  ['list', ['next', ['a']]],
-  ['or',
-   ['==', ['next', ['a']], ['nil']],
-   ['and',
-    ['!=', ['next', ['a']], ['nil']],
-    ['list', ['next', ['next', ['a']]]]]]],
- '\n']
-   
- 
-#function to convert internal encoding to smt2 format 
+# function to convert internal encoding to smt2 format
 def smt_print(formula):
     out = ""
     left = ""
