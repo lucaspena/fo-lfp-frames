@@ -16,6 +16,8 @@ def smt_print(formula):
     i = 0
     if type(formula) != list:
         return formula
+    elif len(formula) == 1:
+        return formula[0]
     elif formula[0] == "==":
         left = "= "
         i = 1
