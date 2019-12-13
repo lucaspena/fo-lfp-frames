@@ -38,9 +38,25 @@ def smt_print(formula):
 
 # function to put VC together from elements and output SMT2 formula for Z3
 def z3call(pre, code, post, inst):
-    return "(and\n" + "(=>\n" + "   (and\n" + smt_print(pre) + "\n" + smt_print(code) + "\n   );pre and code\n" \
-        + smt_print(post) + "\n);pre and code implies post\n ;these are inst\n" + smt_print(inst) \
-        + ";end of inst" + "\n);end of formula"
+    pre = smt_print(pre)
+    code = smt_print(code)
+    post = smt_print(post)
+    smt_inst = ""
+    for term in inst:
+        smt_inst += "(assert " + smt_print(term) + ")\n"
+    # print pre
+    # print code
+    # print post
+    # print inst
+    out = ""
+    out += "(assert " + pre + ")\n"
+    out += "(assert " + code + ")\n"
+    out += smt_inst
+    out += "(assert (not " + post + "))"
+    return out
+    # return "(and\n" + "(=>\n" + "   (and\n" + smt_print(pre) + "\n" + smt_print(code) + "\n   );pre and code\n" \
+    #     + smt_print(post) + "\n);pre and code implies post\n ;these are inst\n" + smt_print(inst) \
+    #     + ";end of inst" + "\n);end of formula"
 
 # Test
 def test():
@@ -49,7 +65,7 @@ def test():
                           ["and", ["!=", ["x"], ["nil"]],
                                   ["list", ["next", ["x"]]]]]]
 
-   pre = ["True"]
+   pre = ["true"]
    code = ["==", ["a"], ["nil"]]
    post = ["list", ["next", ["a"]]]
 
@@ -57,6 +73,6 @@ def test():
    inst = remove_duplicates(instantiate(terms, ["x", "y", "z"], [listf]))
    # terms2 = collect_terms_formulas([pre, code, post] + inst)
    # inst2 = remove_duplicates(instantiate(terms2, ["x", "y", "z"], [listf]))
-   return z3call(pre, code, post, inst[2])
+   return z3call(pre, code, post, inst)
 
 print test()
