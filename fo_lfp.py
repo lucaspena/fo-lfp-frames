@@ -53,7 +53,6 @@ def instantiate(terms, variables, rec_defs):
     inst = []
     for rec_def in rec_defs:
         inst += instantiate_one(terms, variables, rec_def)
-
     return inst
             
 # Helper for instantiating
@@ -67,9 +66,9 @@ def instantiate(terms, variables, rec_defs):
 #Collect foreground terms from each formula/term/subformula given. 
 #Input is one level of [], such as ["iff", ...]
 def collect_terms(things):
-    constants = ["True", "False", "\empty"]
-    bool_constructors = ["not", "and", "or", "iff", "==", "!=", "implies", "ite"]
-    predicates = ["list", "hlist", "keys", "list2", "hlist2", "keys2"]
+    constants = ["True", "False", "\empty", "1", "0"]
+    bool_constructors = ["not", "and", "or", "iff", "==", "!=", "<=", ">", "implies", "ite"]
+    predicates = ["list", "hlist", "keys", "list2", "hlist2", "keys2", "listlen"]
     set_ops = ["union", "intersect", "singleton"]
     array_ops = ["store", "select"]
     skip_symbols = ["$"]

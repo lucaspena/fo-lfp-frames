@@ -61,16 +61,25 @@ def z3call(pre, code, post, inst):
 # Test
 def test():
    listf = ["iff", ["list", ["x"]],
-                   ["or", ["==", ["x"], ["nil"]],
-                          ["and", ["!=", ["x"], ["nil"]],
-                                  ["list", ["next", ["x"]]]]]]
+                   ["ite", ["==", ["x"], ["nil"]],
+                           ["true"],
+                           ["list", ["next", ["x"]]]]]
 
-   pre = ["true"]
-   code = ["==", ["a"], ["nil"]]
-   post = ["list", ["next", ["a"]]]
+   listlen = ["iff", ["listlen", ["x"], ["y"]],
+                     ["ite", ["==", ["x"], ["nil"]],
+                             ["==", ["y"], ["0"]],
+                             ["and", [">", ["y"], ["0"]],
+                                     ["listlen", ["next", ["x"]], ["-", ["y"], ["1"]]]]]]
 
-   terms = collect_terms_formulas([pre, code, post])
-   inst = remove_duplicates(instantiate(terms, ["x", "y", "z"], [listf]))
+   pre = ["listlen", ["x"], ["l"]]
+   code = ["ite", ["<=", ["l"], ["1"]],
+                  ["==", ["ret"], ["nil"]],
+                  ["==", ["ret"], ["next", ["x"]]]]
+   post = ["list", ["ret"]]
+
+   # terms = collect_terms_formulas([pre, code, post])
+   init_terms = [['x'], ['l'], ['ret'], ['nil'], ['next', ['x']]]
+   inst = remove_duplicates(instantiate(init_terms, ["x", "ret"], [listf, listlen]))
    # terms2 = collect_terms_formulas([pre, code, post] + inst)
    # inst2 = remove_duplicates(instantiate(terms2, ["x", "y", "z"], [listf]))
    return z3call(pre, code, post, inst)
