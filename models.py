@@ -34,4 +34,6 @@ listlen = ["iff", ["listlen", ["x"], ["y"]],
                           ["and", [">", ["y"], ["0"]],
                                   ["listlen", ["next", ["x"]], ["-", ["y"], ["1"]]]]]]
 
-generate_models(4, { 'unary-symbols': ['next'], 'axioms': [listf, listlen] })
+print generate_models_size(4, { 'unary-symbols': ['next'],
+                                'constants': ['-1'],
+                                'axioms': [listf, listlen] })[0]
