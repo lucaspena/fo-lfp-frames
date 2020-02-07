@@ -40,7 +40,7 @@ def ulist_rank(x):
 
 def ulistlen_rank(x, l):
     return IteBool( x == -1,
-                    And(rank_listlen(x,l) == 0, listlen(x,0)),
+                    IteBool(l == 0, And(rank_listlen(x,l) == 0, listlen(x,0)), Not(listlen(x, l))),
                     IteBool( listlen(next(x), l - 1),
                              And(rank_listlen(x, l) == rank_listlen(next(x), l-1) + 1, listlen(x,l)),
                              And(rank_listlen(x, l) == -1, Not(listlen(x,l)))))
@@ -48,6 +48,11 @@ def ulistlen_rank(x, l):
 sol.add(next(-1) == -1)
 sol.add(Or(next(1) == 1, next(1) == 2, next(1) == -1))
 sol.add(Or(next(2) == 1, next(2) == 2, next(2) == -1))
+
+sol.check()
+mod = sol.model()
+
+# while loop to evaluate list
 
 sol.add(ulist_rank(1))
 sol.add(ulist_rank(2))
